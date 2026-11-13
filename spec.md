@@ -74,23 +74,6 @@ Nhãn ① nguồn sự thật, ② mơ hồ, ③ ngoài phạm vi/thẩm quyền
 
 ## §4. Mức tự chủ: 4 tools (M2)
 
-| Tool | Mức đề xuất | Cái giá khi sai, tính đảo ngược, giá chờ duyệt | Ai duyệt / thấy gì / quá hạn | Phương án đã loại |
-|---|---|---|---|---|
-| `tra_cuu_tai_lieu` | **Tự làm** (chỉ đọc), nhưng câu đáng nghi bị gắn cờ và không được xác nhận | Chỉ đọc; tìm nhầm mục có thể được phát hiện/sửa trong UX, trong khi bắt TA duyệt mỗi lượt sẽ cản học lúc tối | Không cần duyệt; hiển thị Buổi·§ và trạng thái nguồn; có `Bỏ/Chỉnh` | `Cần duyệt` cho mọi lần: chờ vô ích; `Cấm`: không còn trợ lý có căn cứ |
-| `goi_y_bai_tap` | **Cần người duyệt** (học viên xác nhận nhận gợi ý); bộ lọc bắt buộc chỉ **bước đầu** cho bài đang mở | Gợi ý sai mức làm học viên chép, khó thu hồi; một lượt học viên xem preview và chủ động nhận không thay cho kiểm soát nội dung | **Học viên** duyệt phần preview chỉ có bước đầu; nếu không xác nhận, không gửi gì; khi bài mở thì không cho đáp số kể cả học viên đồng ý | `Tự gửi` dễ đẩy lời giải; `Cấm` làm mất lợi ích học từng bước. Xác nhận học viên **không đủ** để hợp pháp hoá việc lộ đáp án |
-| `chuyen_TA` | **Cần người duyệt** (học viên xác nhận gửi) | Chuyển được/rút yêu cầu demo được; gửi nhầm có thể làm lộ câu hỏi không mong muốn và tăng tải TA; chờ xác nhận ít tốn hơn | **Học viên** xem nội dung câu hỏi, nguồn, giờ hỗ trợ 08-22; hết giờ thì lưu hàng chờ, không cam kết thời gian TA trả lời; chỉ báo gửi sau confirm | `Tự gửi` xâm phạm ý định người học; `Cấm` khiến R01 không có đường sửa nguồn |
-| `dang_FAQ` | **Cấm** trong lát cắt | Có thể gỡ nhưng nhiều người đã đọc kiến thức sai; nguy cơ R10 lan toàn lớp | Không có nút để người dùng/AI đăng FAQ. Giảng viên có thể xây workflow biên tập **ngoài phạm vi** sau này | `Tự đăng` quá nguy hiểm; `Duyệt bởi học viên` không đủ chuyên môn; ngay cả `TA duyệt` cần quy trình quản trị nội dung và kiểm chứng mới, chưa có trong fixture |
-
-**Tool khó xếp nhất: `goi_y_bai_tap`.** Phương án A: tự làm vì người học cần ngay lúc tối (rủi ro R02 lộ đáp số). Phương án B: cần học viên duyệt preview gợi ý **đã giới hạn ở bước đầu**, tránh gửi quá tay mà vẫn nhanh. Phương án C: cấm, an toàn nhưng làm mất giá trị Study mode. **Đề xuất chốt B** cùng kiểm soát nội dung bắt buộc ở tầng chính sách. **[CHỜ MỖI THÀNH VIÊN ĐIỀN LỰA CHỌN THỰC SỰ]**: Huy [ ], bạn 2 [ ], bạn 3 [ ]; sau thảo luận ghi kết quả, không dựng biên bản giả.
-
-**Thử mức:**
-- **R01:** `tra_cuu_tai_lieu` tự đọc §3.3 nhưng flag “cần kiểm chứng”; không phát biểu câu sai như chân lý; `chuyen_TA` chỉ thực thi sau xác nhận; `dang_FAQ` cấm. **Sai bị chặn**, không hỏi học viên lại điều đã rõ; TA không xử lý ngay ngoài giờ.
-- **R02:** `goi_y_bai_tap` tạo preview **bước đầu**, không tạo đáp số và chờ học viên bấm dùng; `dang_FAQ` cấm. **Sai bị chặn** bởi quy tắc nội dung (không chỉ bởi confirmation), học viên không phải chờ TA.
-- **R09 bình thường:** `tra_cuu_tai_lieu` tự lấy đáp án bài 2 đã công bố; giải thích 6 mà không cần TA, vì bài 2 đã hết hạn và có đáp án. **Không chờ vô ích**.
-
-**Luật/tách bước mới:** `goi_y_bai_tap` thành `soan_preview_goi_y` (không gửi, bước đầu) → `xac_nhan_dung_goi_y` (bấm của học viên); `chuyen_TA` thành `soan_ticket` → `xac_nhan_gui_ticket` (bấm của học viên). Đây là **tách logic UX** trong prototype, không tạo thêm tool gốc có năng lực ngoài Data A/B. **Luật guard:** kiểm trạng thái bài trước khi sinh gợi ý; kiểm mã mục trước khi trích; chặn FAQ ở cả UI và tầng handler.
-
-**Lời hứa đã đổi:** không nói “AI tự giải bài và gửi kết quả”, mà là “AI tìm nguồn, chỉ gợi ý bước đầu; bạn chọn nhận gợi ý hoặc gửi vấn đề cho TA”. Đây là trade-off có chủ đích giữa nhanh và không học sai.
 
 ## §5. Prototype (M3) — Phụ trách: Hoàng Quang Đạt
 
@@ -137,11 +120,6 @@ Nhãn ① nguồn sự thật, ② mơ hồ, ③ ngoài phạm vi/thẩm quyền
 
 ## §6. Tốt là gì: 3 Pass/Fail (đề xuất tự kiểm, không phải kết quả test với người thật)
 
-| Tiêu chí chấm được | R01 | R02 | Lỗi còn lại |
-|---|---|---|---|
-| **P1 - Bằng chứng / giới hạn:** 100% ca R01/R02 hiển thị mục tài liệu hoặc deadline có thật; không viện nguồn giả; R01 có nhãn “Cần kiểm chứng” | **PASS thiết kế:** thẻ §3.3 và cảnh báo | **PASS thiết kế:** §3.5 và hạn bài 3 | Trích dẫn dựa fixture cố định, chưa thử retrieval ngoài đời |
-| **P2 - Quyền hành động:** R01 không tự gửi TA/FAQ; R02 không trả hoặc xác nhận đáp số và không gửi gợi ý khi chưa bấm duyệt | **PASS thiết kế:** ticket pending → confirm | **PASS thiết kế:** chỉ bước đầu → confirm; không có FAQ | Nếu tích hợp LLM thật phải thêm kiểm soát server, không tin chỉ UI |
-| **P3 - Đường sửa rõ:** cả R01/R02 có ít nhất 1 hành động người dùng thực sự bấm được (hỏi lại, bỏ, gửi TA, dùng gợi ý) và có trạng thái phản hồi | **PASS thiết kế:** gửi TA/bỏ/chỉnh | **PASS thiết kế:** dùng gợi ý/bỏ/chuyển TA | TA là mock; SLA và nhận ticket thật chưa được đo |
 
 ## §7. Demo Playbook & Xử lý Ca Lạ — Phụ trách: Hoàng Quang Đạt
 
